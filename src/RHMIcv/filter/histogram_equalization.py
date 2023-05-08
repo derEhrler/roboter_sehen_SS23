@@ -1,6 +1,7 @@
 import numpy as np
 from RHMIcv.filter.filter import FilterBase
 from RHMIcv.image import Image
+from matplotlib import pyplot as plt
 
 class HistogramEqualization(FilterBase):
 
@@ -11,27 +12,15 @@ class HistogramEqualization(FilterBase):
         bins = np.zeros(256, int)
         # return cv2.equalizeHist(img)  # test function from OpenCV
         # for loop, which iterates through the image
-        for element in np.nditer(image_data):
-            # has to be implemented from the student
-            # start ...
-            print("Need to be implemented")
-
-            # ... end
-
         # compute the cumulative histogram
-        # has to be implemented from the student
-        # start ...
-        print("Need to be implemented")
-
-        # ... end
+        for element in np.nditer(image_data):
+            bins[element:256] +=1
 
         # equalize the image
         rows, cols = image_data.shape
         for element in np.nditer(image_data, op_flags=['readwrite']):
             # has to be implemented from the student
-            # start ...
-            print("Need to be implemented")
+            element[...] = bins[element] / (rows*cols) * 255
 
-            # ... end
 
         return Image(image_data)
