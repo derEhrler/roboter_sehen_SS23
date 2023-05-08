@@ -37,8 +37,8 @@ class Image:
         for element in np.nditer(self.data):
             # has to be implemented from the student
             # start ...
-            print("Need to be implemented")
-
+            # print("Need to be implemented")
+            bins[element] += 1
             # ... end
 
         # plot the resulting histogram normalized
