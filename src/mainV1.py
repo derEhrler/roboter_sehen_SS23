@@ -8,9 +8,9 @@ from RHMIcv.filter.histogram_equalization import HistogramEqualization
 from RHMIcv.filter.mean_filter import MeanFilter
 from RHMIcv.filter.median_filter import MedianFilter
 
-HISTOGRAM = False
-HISTOGRAM_EQUALIZATION = False
-MEAN_FILTER = True
+HISTOGRAM = True
+HISTOGRAM_EQUALIZATION = True
+MEAN_FILTER = False
 MEDIAN_FILTER = True
 
 def main():
@@ -40,7 +40,7 @@ def main():
         histogram_equalization = HistogramEqualization()
         equal_img = histogram_equalization.filter(img_2)
         equal_img.display_histogram()
-        equal_img.display("mean filter")
+        equal_img.display("Histogrammausgleich")
 
     if MEAN_FILTER is True:
         # third exercise: write the mean or box filter (complete function in the file mean_filter.py)
