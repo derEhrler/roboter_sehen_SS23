@@ -17,34 +17,29 @@ def detect_chessboard(images, num_x, num_y, square_size, show_images=True):
     obj_p *= square_size  # add the square size of the chessboard
 
     for img in images:
+
         image_data = img.data
+        ret, corners = cv2.findChessboardCorners(image_data, (num_x, num_y), None)
 
-        # start ...
-        print("Need to be implemented")
-
-        # Find the chess board corners and append them to the point lists
-
-        # ... end
+        if ret == True:
+            obj_points.append(obj_p)
+            corners2 = cv2.cornerSubPix(image_data, corners, (3,3),(-1,-1), criteria)
+            img_points.append(corners2)
 
     # return object and image points
     return obj_points, img_points
 
 def calibrate_intrinsic(obj_points, img_points, img):
-    # start ...
-    print("Need to be implemented")
-    # start the calibration
-
-    # ... end
-
+    
+    RMS, K, dist_coeffs, rvecs, tvecs = cv2.calibrateCamera(obj_points, img_points, img.data.shape[::-1], None, None)
     # return camera matrix K and the distortion parameters
+    print(RMS)
+
     return K, dist_coeffs
 
 def calibrate_extrinsic(obj_points, img_points, K, dist_coeffs):
-    # start ...
-    print("Need to be implemented")
-    # start the calibration
-
-    # ... end
-
+    
+    R, tvecs = cv2.solvePnP(obj_points[0], img_points[0], K, dist_coeffs)
+    R = cv2.Rodrigues(R)
     # return rotation matrix R and the translation vector t
     return R[0], tvecs
