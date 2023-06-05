@@ -6,7 +6,7 @@ from RHMIcv.image import Image
 from RHMIcv.calib import calib
 
 IMAGE_CAPTURE = False
-CALIBRATION = False
+CALIBRATION = True
 DISTORTION_CORRECTION = False
 EXTRINSIC_CALIBRATION = True
 
@@ -32,7 +32,7 @@ def main():
             elif key == ord('s'):
                 image_file = "image" + str(count) + ".png"
                 print("Write image: " + image_file)
-                image.save("data\\capture\\" + image_file)
+                image.save("data/capture/" + image_file)
                 count += 1
 
         # When everything done, release the capture
@@ -65,8 +65,8 @@ def main():
         # test the calibration with the input images, discuss the changes
         for img in calib_images:
             img.undistort(K, dist_coeffs)
-            img.display("undistorted")
-            cv2.waitKey(0)
+            #img.display("undistorted")
+            #cv2.waitKey(0)
 
     if EXTRINSIC_CALIBRATION is True:
         # read the calibration
@@ -75,9 +75,9 @@ def main():
         dist_coeffs = cv_file.getNode("dist_coeffs").mat()
         # read and undistort the images
         images = utils.read_captured_images()  # read all images inside the folder "data/capture"
-        for img in images:
-            img.undistort(K, dist_coeffs)
-        image = [images[0]]  # take the first image for the extrinsic calibration
+        #for img in images:
+         #   img.undistort(K, dist_coeffs)
+        image = [images[9]]  # take the first image for the extrinsic calibration
 
         # perform the extrinsic calibration and get the pose of the board to the camera
         # detect all chessboards and get the object and image points

@@ -114,6 +114,10 @@ class Image:
 
     def undistort(self, K, coeffs):
         # start ...
-        print("Need to be implemented")
-
+        h,  w = self.data.shape[:2]
+        newcameramtx, roi = cv2.getOptimalNewCameraMatrix(K, coeffs, (w,h), 1, (w,h))
+        self.data = cv2.undistort(self.data, newcameramtx, coeffs)
+        #x, y, w, h = roi
+        #self.data = self.data[y:y+h, x:x+w]
+        #cv2.imwrite('calibresult.png', dst)
         # ... end
