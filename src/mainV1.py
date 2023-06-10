@@ -8,10 +8,10 @@ from RHMIcv.filter.histogram_equalization import HistogramEqualization
 from RHMIcv.filter.mean_filter import MeanFilter
 from RHMIcv.filter.median_filter import MedianFilter
 
-HISTOGRAM = True
-HISTOGRAM_EQUALIZATION = True
-MEAN_FILTER = False
-MEDIAN_FILTER = True
+HISTOGRAM = False
+HISTOGRAM_EQUALIZATION = False
+MEAN_FILTER = True
+MEDIAN_FILTER = False
 
 def main():
     # First we will load the images, here some different examples
@@ -20,27 +20,22 @@ def main():
     img_3 = Image("data/mika.png", 0)
 
     # then we add noise to evaluate the filters and display the result
-    img_1.add_noise("s&p")  # or "poison", "s&p"
-    # img_2.add_noise("speckle")  # or "gauss", "s&p"
-    # img_3.add_noise("speckle")  # or "gauss", "poison"
+    img_1.add_noise("gauss")  # or "poison", "s&p"
+    img_2.add_noise("poison")  # or "gauss", "s&p"
+    img_3.add_noise("s&p")  # or "gauss", "poison"
     img_1.display("original_image")
-    # img_2.display("original_image")
-    # img_3.display("original_image")
 
     if HISTOGRAM is True:
         # first exercise: generate histogram from image (complete function in the file image.py)
         print("Berechnung und Anzeige des Histogramms")
         img_1.display_histogram()
-        img_2.display_histogram()
-        img_3.display_histogram()
 
     if HISTOGRAM_EQUALIZATION is True:
         # second exercise: write the histogram equalization (complete function in the file histogram_equalization.py)
         print("Berechnung und Anzeige des Histogrammausgleichs")
         histogram_equalization = HistogramEqualization()
-        equal_img = histogram_equalization.filter(img_2)
+        equal_img = histogram_equalization.filter(img_1)
         equal_img.display_histogram()
-        equal_img.display("Histogrammausgleich")
 
     if MEAN_FILTER is True:
         # third exercise: write the mean or box filter (complete function in the file mean_filter.py)

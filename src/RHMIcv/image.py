@@ -37,8 +37,8 @@ class Image:
         for element in np.nditer(self.data):
             # has to be implemented from the student
             # start ...
-            # print("Need to be implemented")
-            bins[element] += 1
+            print("Need to be implemented")
+
             # ... end
 
         # plot the resulting histogram normalized
@@ -114,10 +114,6 @@ class Image:
 
     def undistort(self, K, coeffs):
         # start ...
-        h,  w = self.data.shape[:2]
-        newcameramtx, roi = cv2.getOptimalNewCameraMatrix(K, coeffs, (w,h), 1, (w,h))
-        self.data = cv2.undistort(self.data, newcameramtx, coeffs)
-        #x, y, w, h = roi
-        #self.data = self.data[y:y+h, x:x+w]
-        #cv2.imwrite('calibresult.png', dst)
+        print("Need to be implemented")
+
         # ... end

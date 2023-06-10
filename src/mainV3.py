@@ -18,7 +18,7 @@ from RHMIcv.feature.orb_feature import ORBFeature
 SOBEL = False
 CANNY = False
 HOUGH_CV = False
-HOUGH_SELF = False
+HOUGH_SELF = True
 HOUGH_CIRCLE_DEMO = True
 HARRIS = True
 ORB = True
@@ -35,7 +35,7 @@ def main():
     # first exercise: the sobel filter
     if SOBEL is True:
         # implement sobel filter for different directions
-        sobel_filter = SobelFilter(5)  # initialize the filter
+        sobel_filter = SobelFilter(3)  # initialize the filter
 
         sobel_filter.set_directions(1, 0)  # x, y
         sobel_x_img = sobel_filter.filter(img_1)
@@ -44,7 +44,6 @@ def main():
         sobel_y_img = sobel_filter.filter(img_1)
 
         utils.display_images(sobel_x_img.data, sobel_y_img.data, "x / y")
-
         sobel_both_img = sobel_filter.filter_both_sides(img_sobel)
         sobel_both_img.display("sobel both")
 
@@ -52,6 +51,8 @@ def main():
     if CANNY is True:
         canny_filter = CannyFilter()  # initialize the filter
         canny_img = canny_filter.filter(img_1)
+        canny_img.display("canny")
+        canny_img = canny_filter.filter(img_sobel)
         canny_img.display("canny")
 
         trackbar = CannyTrackbar(canny_filter)  # initialize the filter

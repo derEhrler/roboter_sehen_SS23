@@ -20,8 +20,15 @@ class CannyFilter(FilterBase):
 
         image_data = image.data.copy()
         # start ...
-        print("Need to be implemented")
 
+        # Setting parameter values
+        #t_lower = 50  # Lower Threshold
+        #t_upper = 150  # Upper threshold
+        
+
+        # Applying the Canny Edge filter
+        output_image = cv2.Canny(image_data, self.lower_bound, self.upper_bound, apertureSize = self.kernel_size)
+        
         # ... end
 
         return Image(output_image)
