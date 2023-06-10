@@ -16,17 +16,21 @@ class SobelFilter(FilterBase):
     def filter(self, image, image_type=cv2.CV_64F):
         img = image.data.copy()
         # start ...
-        print("Need to be implemented")
+        output_image = cv2.Sobel(src=img, ddepth=cv2.CV_64F, dx=self.direction_x, dy=self.direction_y, ksize=self.kernel_size) # Combined X and Y Sobel Edge Detection 
 
         # ... end
         return Image(output_image)
 
     def filter_both_sides(self, image, image_type=cv2.CV_64F):
+        img = image.data.copy()
         # start ...
-        print("Need to be implemented")
+        sobel_x = cv2.Sobel(src=img, ddepth=cv2.CV_64F, dx=1, dy=0, ksize=self.kernel_size) # Combined X and Y Sobel Edge Detection 
 
+        sobel_y = cv2.Sobel(src=img, ddepth=cv2.CV_64F, dx=0, dy=1, ksize=self.kernel_size)
         # care of absolute values
+
+
 
         # ... end
 
-        return Image(image_x + image_y)
+        return Image(abs(sobel_x) + abs(sobel_y))
