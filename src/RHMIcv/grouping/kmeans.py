@@ -54,6 +54,38 @@ class KMeans(GroupingBase):
 
         return [self.cluster, np.array(self.cluster_centers)]
     
+
+    def group2(self, k, max_iterations=1000, dimension=2, Trials = 10):
+        self.centroids = random.choice(self.all_points) 
+        iteration = 0
+        prev_centroids = None
+        for episodes in range(Trials):
+            
+            variancesum = 0
+
+            while np.not_equal(self.centroids, prev_centroids).any() and iteration < self.max_iter:
+                if iteration >= max_iterations:
+                    break
+                sorted_points = [[] for _ in range(self.n_clusters)]
+                for x in self.all_points:
+                    dists = math.dist(x, self.centroids)
+                    centroid_idx = np.argmin(dists)
+                    sorted_points[centroid_idx].append(x)         
+                prev_centroids = self.centroids
+                self.centroids = [np.mean(cluster, axis=0) for cluster in sorted_points]
+                for i, centroid in enumerate(self.centroids):
+                    if np.isnan(centroid).any():  
+                        self.centroids[i] = prev_centroids[i]
+                iteration += 1
+            
+            for x in self.cluster:                                      # Add variance for each cluster center
+                variancesum += np.var(self.cluster[x])
+            
+            self.variance.append(variancesum)                           # Add variance for this episode to array
+
+        print("Best Cluster centers with lowest variance are", self.cluster[np.argmax(self.variance)])  # Output cluster with lowest variance
+
+        return [self.cluster, np.array(self.cluster_centers)]
 if __name__ == "__init__":  # Konnte noch nicht getestet werden
     KMeansAgent = KMeans()
     datapoints = list(random.random() for i in range (20))
