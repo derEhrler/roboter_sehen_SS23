@@ -21,20 +21,33 @@ class KMeans(GroupingBase):
             new_points[i] = centroids[cluster[i]]
         return np.reshape(new_points, (image.shape[0], image.shape[1]))
 
-    def group(self, k, max_iterations=1000, dimension=2, datapoints=None):
+    def group(self, k, max_iterations=1000, dimension=2, datapoints=None, Trials=10):
         # start ...
         print("Need to be implemented")
         if datapoints == None:
             return []
 
         # Limit iterations
-        self.cluster_centers = random.choice(datapoints, k)
-        self.cluster = np.arange(k)
+        self.trials = Trials
+        self.variance = []
+        np.array(self.variance)
 
-        for step in range(max_iterations):
-            for i in range(len(datapoints)):
-                idx = np.argmin(math.dist(self.cluster_centers, datapoints[i]))
-                self.cluster[idx].np.append(datapoints[i])
+        for episodes in range(self.trials):
+            self.cluster_centers = random.choice(datapoints, k)
+            self.cluster = np.arange(k)
+            variancesum = 0
+
+            for step in range(max_iterations):
+                for i in range(len(datapoints)):
+                    idx = np.argmin(math.dist(self.cluster_centers, datapoints[i]))
+                    self.cluster[idx].np.append(datapoints[i])
+            
+            for x in cluster:
+                variancesum += self.cluster[x]
+            
+            self.variance.append(variancesum)
+
+        print("Best Cluster points, with lowest variance is cluster", self.cluster[np.argmax(self.variance)])
 
         # Randomly Choose Centers for the Clusters
 
