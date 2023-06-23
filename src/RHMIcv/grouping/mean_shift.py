@@ -14,8 +14,35 @@ class MeanShift(GroupingBase):
         for i in range(len(self.all_points)):
             centroids[i] = self.all_points[i]
 
-        # start ...
-        print("Need to be implemented")
+        while True:
+            new_centroids = []
+            for i in centroids:
+                in_bandwidth = []
+                centroid = centroids[i]
+                for featureset in self.all_points:
+                    if np.linalg.norm(featureset-centroid) < self.radius:
+                        in_bandwidth.append(featureset)
 
-        # ... end
+                new_centroid = np.average(in_bandwidth,axis=0)
+                new_centroids.append(tuple(new_centroid))
+
+            uniques = sorted(list(set(new_centroids)))
+            prev_centroids = dict(centroids)
+
+            centroids = {}
+            for i in range(len(uniques)):
+                centroids[i] = np.array(uniques[i])
+
+            optimized = True
+
+            for i in centroids:
+                if not np.array_equal(centroids[i], prev_centroids[i]):
+                    optimized = False
+                if not optimized:
+                    break
+                
+            if optimized:
+                break
+
+        self.centroids = centroids
         return centroids
