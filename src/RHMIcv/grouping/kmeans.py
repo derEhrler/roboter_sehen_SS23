@@ -21,10 +21,10 @@ class KMeans(GroupingBase):
             new_points[i] = centroids[cluster[i]]
         return np.reshape(new_points, (image.shape[0], image.shape[1]))
 
-    def group(self, k, max_iterations=1000, dimension=2, datapoints=None, Trials=10):
+    def group(self, k, max_iterations=1000, dimension=2, Trials=10):
         # start ...
         print("Need to be implemented")
-        if datapoints == None:
+        if self.all_points == None:
             return []
 
         # Limit iterations
@@ -32,26 +32,26 @@ class KMeans(GroupingBase):
         self.variance = []
         np.array(self.variance)
 
-        for episodes in range(self.trials):
-            self.cluster_centers = random.choice(datapoints, k)
-            self.cluster = np.arange(k)
+        for episodes in range(self.trials):                             # Main Loop for finding optimal cluster Centers
+            self.cluster_centers = random.choice(self.all_points, k)    # Pick k new random cluster centers
+            self.cluster = np.arange(k)                                 # Initialize k new cluster
             variancesum = 0
 
-            for step in range(max_iterations):
-                for i in range(len(datapoints)):
-                    idx = np.argmin(math.dist(self.cluster_centers, datapoints[i]))
-                    self.cluster[idx].np.append(datapoints[i])
+            for step in range(max_iterations):                          # Subloop for each Episode
+                for i in range(len(datapoints)):                        # Do for each Datapoint
+                    idx = np.argmin(math.dist(self.cluster_centers, datapoints[i])) # Find min distance to cluster center
+                    self.cluster[idx].np.append(datapoints[i])          # Add to corresponding cluster
+
+                self.cluster_centers = np.mean(self.cluster)            # Calculate new cluster centers
+
+            for x in self.cluster:                                      # Add variance for each cluster center
+                variancesum += np.var(self.cluster[x])
             
-            for x in cluster:
-                variancesum += self.cluster[x]
-            
-            self.variance.append(variancesum)
+            self.variance.append(variancesum)                           # Add variance for this episode to array
 
-        print("Best Cluster points, with lowest variance is cluster", self.cluster[np.argmax(self.variance)])
+        print("Best Cluster centers with lowest variance are", self.cluster[np.argmax(self.variance)])  # Output cluster with lowest variance
 
-        # Randomly Choose Centers for the Clusters
 
-        # ... end
         return [self.cluster, np.array(self.cluster_centers)]
     
 if __name__ == "__init__":  # Konnte noch nicht getestet werden
