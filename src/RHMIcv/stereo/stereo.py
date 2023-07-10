@@ -69,8 +69,8 @@ def triangulate(baseline, K_left, K_right, points_left, points_right):
 def compute_disparity_map(img_left, img_right, num_disparities, block_size):
 
     stereo = cv.StereoBM_create(numDisparities=16, blockSize=block_size)
-    disparitiy = stereo.compute(img_left,img_right)
-    plt.imshov(disparitiy,'gray')
+    disparity = stereo.compute(img_left,img_right)
+    plt.imshov(disparity,'gray')
     plt.show()
 
     # ... end
