@@ -3,6 +3,7 @@ import cv2 as cv
 import numpy as np
 import csv
 import numpy.linalg as lg
+from matplotlib import pyplot as plt
 
 def estimate_fundamental_matrix(points_left, points_right):
     # estimate the fundamental matrix from point correspondents
@@ -66,8 +67,11 @@ def triangulate(baseline, K_left, K_right, points_left, points_right):
     return X
 
 def compute_disparity_map(img_left, img_right, num_disparities, block_size):
-    # start ...
-    print("Need to be implemented")
+
+    stereo = cv.StereoBM_create(numDisparities=16, blockSize=block_size)
+    disparitiy = stereo.compute(img_left,img_right)
+    plt.imshov(disparitiy,'gray')
+    plt.show()
 
     # ... end
     return disparity
